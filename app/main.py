@@ -1,20 +1,15 @@
 from flask import Flask, render_template, request, url_for, redirect
 import os
 
-#from src.common.database import Database
-#from src.models.trailer import Trailer
-
 from common.database import Database
-from models.trailer import Trailer
-
-
 
 app = Flask(__name__)
 
 
 @app.before_first_request
 def initialize_database():
-    Database.initialize()
+    pass
+    #Database.initialize()
 
 
 uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
