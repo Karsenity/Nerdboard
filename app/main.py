@@ -12,13 +12,13 @@ def initialize_database():
     Database.initialize()
 
 
-uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
+#uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
 
 
 @app.route('/')
 def display_page():
-    files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
-    video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
+    #files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
+    #video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
 
     #return render_template("display.html", len=len(video_urls), videos=video_urls)
     return "<h1>Welcome to Geeks for Geeks</h1>"
