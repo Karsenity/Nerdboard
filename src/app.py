@@ -61,6 +61,3 @@ def submit_project():
 def submit_event():
     return render_template("submit-event.html")
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
