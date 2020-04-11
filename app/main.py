@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect
 import os
 
-from common.database import Database
+#from common.database import Database
 
 app = Flask(__name__)
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.before_first_request
 def initialize_database():
     pass
-    Database.initialize()
+    #Database.initialize()
 
 
 #uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
