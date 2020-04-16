@@ -3,19 +3,17 @@ import os
 
 #from src.common.database import Database
 #from src.models.trailer import Trailer
-
 from common.database import Database
 from models.trailer import Trailer
 from models.event import Event
-
-
 
 app = Flask(__name__)
 
 
 @app.before_first_request
 def initialize_database():
-    Database.initialize()
+    pass
+    #Database.initialize()
 
 
 uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
@@ -87,6 +85,3 @@ def submit_project():
 def submit_event():
     return render_template("submit-event.html")
 
-
-if __name__ == '__main__':
-    app.run()
