@@ -8,13 +8,13 @@ from common.database import Database
 
 class Trailer(object):
 
-    def __init__(self, author, email, aoc, title, description, picture=None, _id=None):
+    def __init__(self, author, email, display_email, title, trailer_path, link=None, _id=None):
         self.author = author
         self.email = email
-        self.aoc = aoc
+        self.display_email = display_email
         self.title = title
-        self.description = description
-        self.picture = picture
+        self.trailer_path = trailer_path
+        self.link = link
         self._id = uuid.uuid4().hex if _id is None else _id
 
     def save_to_mongo(self):
@@ -26,10 +26,10 @@ class Trailer(object):
             '_id': self._id,
             'author': self.author,
             'email': self.email,
-            'aoc': self.aoc,
+            'display_email': self.display_email,
             'title': self.title,
-            'description': self.description,
-            'picture': self.picture,
+            'trailer': self.trailer_path,
+            'link': self.link
         }
 
     @classmethod

@@ -15,7 +15,7 @@
 					</div>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link" href="{{ url_for('upload_file') }}">Visit Display</a>
+				  <a class="nav-link" href="{{ url_for('display_page') }}">Visit Display</a>
 				</li>
 				<li class="nav-item">
 				  <a class="nav-link" href="#">Admin Tools</a>
@@ -26,7 +26,7 @@
 		<div class="container justify-content-center w-75 py-5 bg-white border shadow" style="margin-top:150px;margin-bottom:100px;margin-left:auto;margin-right:auto;">
 			<h1 class="text-center">Submit an Event</h1>
 			<br/><hr class="w-75"/><br/>
-			<form name="submit-project" action="#" method="post" enctype="multipart/form-data" style="margin-left:10%">
+			<form name="submit-event" action="{{ url_for('handle_event_submission') }}" method="post" enctype="multipart/form-data" style="margin-left:10%">
 				<div class="form-group custom-control-inline w-75">
 					<label for="name" class="h3 mr-3 w-50">Your Name: </label>
 					<input type="text" class="form-control bg-light" placeholder="Enter name" id="name" name="name" required>
