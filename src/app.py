@@ -6,6 +6,7 @@ import os
 
 from common.database import Database
 from models.trailer import Trailer
+from models.event import Event
 
 
 
@@ -19,8 +20,15 @@ def initialize_database():
 
 uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
 
-
+# Home Page (Temp)
+# Submission Choice Page
 @app.route('/')
+@app.route('/submit')
+def choose_submission():
+    return render_template("submit.html")
+
+# Display Page
+@app.route('/display')
 def display_page():
     files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
     video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
@@ -28,27 +36,45 @@ def display_page():
     return render_template("display.html", len=len(video_urls), videos=video_urls)
 
 # Handles a file upload
-@app.route('/handleUpload', methods=['POST'])
-def handle_file_upload():
-    # Imagine we were given the info below from the website when we got the request with photo
-    author = "John Doe"
-    email = "john.doe18@ncf.edu"
-    aoc = "Comp Sci"
-    title = "Sample Title"
-    summary = "this is a sample database entry"
+@app.route('/handleTrailerSubmission', methods=['POST'])
+def handle_trailer_submission():
+    author = request.form.get('name')
+    email = request.form.get('email')
+    display_email = request.form.get('display-email')
+    title = request.form.get('title')
+    
+    trailer = request.files.get('trailer')
+    trailer_name = os.path.join(uploads_dir, trailer.filename)
+    trailer.save(os.path.join(uploads_dir, trailer_name))
+    
+    link = request.form.get('link')
 
-    if 'photo' in request.files:
-        photo = request.files['photo']
-        if photo.filename != '':
-            photo.save(os.path.join(uploads_dir, photo.filename))
-            new_post = Trailer(author, email, aoc, title, summary)
-            Trailer.save_to_mongo(new_post)
+    new_post = Trailer(author, email, display_email, title, trailer_name, link)
+    new_post.save_to_mongo()
 
-    return redirect(url_for('upload_file'))
+    return redirect(url_for('confirm_submission'))
 
-# Submission Choice Page
-@app.route('/submit')
-def choose_submission():
+
+# Handles a file upload
+@app.route('/handleEventSubmission', methods=['POST'])
+def handle_event_submission():
+    author = request.form.get('name')
+    email = request.form.get('email')
+    title = request.form.get('title')
+    date = request.form.get('date')
+    time = request.form.get('time')
+    location = request.form.get('location')
+    description = request.form.get('description')
+
+    new_post = Event(author, email, title, date, time, location, description)
+    new_post.save_to_mongo()
+
+    return redirect(url_for('confirm_submission'))
+
+
+# Goes to the submission confirmation
+@app.route('/confirm-submission')
+def confirm_submission():
     return render_template("submit.html")
 
 # Submit Project
