@@ -17,6 +17,18 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	
+	<!--Lets HTML5 elements display properly for dinosaurs still using IE-->
+	<!--[if lt IE 9]>
+		<script>
+			var e = ("abbr,article,aside,audio,canvas,datalist,details," +
+				"figure,footer,header,main,mark,menu,meter,nav,output," +
+				"progress,section,time,video").split(',');
+			for (var i = 0; i < e.length; i++) {
+				document.createElement(e[i]);
+			}
+		</script>
+	<![endif]-->
 </head>
 <body>
 {% block content%}

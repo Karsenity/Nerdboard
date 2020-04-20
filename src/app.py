@@ -19,8 +19,11 @@ def initialize_database():
 uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
 
 # Home Page (Temp)
-# Submission Choice Page
 @app.route('/')
+def home():
+    return choose_submission()
+
+# Submission Choice Page
 @app.route('/submit')
 def choose_submission():
     return render_template("submit.html")

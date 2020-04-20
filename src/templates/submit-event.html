@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <body style="background-color:#BAC2D1">
-	<div class="container-fluid">
-		<nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#003098">
-			<a class="navbar-brand" href="submit.html"><h2 style="font-family:'Share Tech Mono','Lucida Console',Monaco,monospace">Comp Sci Corner</h2></a>
+	<header role="banner" class="container-fluid">
+		<nav role="navigation" class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#003098">
+			<a class="navbar-brand" href="{{ url_for('choose_submission') }}"><h2 style="font-family:'Share Tech Mono','Lucida Console',Monaco,monospace">Comp Sci Corner</h2></a>
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					<a class="nav-link dropdown-toggle" href="{{ url_for('home') }}" id="navbardrop" data-toggle="dropdown">
 						Make a Submission
 					</a>
 					<div class="dropdown-menu">
@@ -22,47 +22,46 @@
 				</li>
 			</ul>
 		</nav>
+	</header>
+	
+	<main role="main" class="container justify-content-center w-75 py-5 bg-white border shadow" style="margin-top:150px;margin-bottom:100px;margin-left:auto;margin-right:auto;">
+		<h1 class="text-center">Submit an Event</h1>
+		<br/><hr class="w-75"/><br/>
+		<form role="form" name="submit-event" action="{{ url_for('handle_event_submission') }}" method="post" enctype="multipart/form-data" style="margin-left:10%">
+			<div class="form-group custom-control-inline w-75">
+				<label for="name" class="h3 mr-3 w-50">Your Name: </label>
+				<input type="text" class="form-control bg-light" placeholder="Enter name" id="name" name="name" required>
+			</div><br/>
+			<div class="form-group custom-control-inline w-75">
+				<label for="email" class="h3 mr-3 w-50">Your Email: </label>
+				<input type="email" class="form-control bg-light" placeholder="Enter email" id="email" name="email" required>
+			</div><hr class="w-75" style="margin-left:5%"/>
+			<div class="form-group custom-control-inline w-75">
+				<label for="title" class="h3 mr-3 w-50">Event Name: </label>
+				<input type="text" class="form-control bg-light" placeholder="Enter event name" id="title" name="title" max-length="50" required>
+			</div><br/>
+			<div class="form-group custom-control-inline w-75">
+				<label for="date" class="h3 mr-3 w-50">Event Date: </label>
+				<input type="date" class="form-control bg-light" placeholder="mm/dd/yyyy" id="date" name="date" required>
+			</div><br/>
+			<div class="form-group custom-control-inline w-75">
+				<label for="time" class="h3 mr-3 w-50">Event Time: </label>
+				<input type="time" class="form-control bg-light" placeholder="--:-- --" id="time" name="time" required>
+			</div><br/>
+			<div class="form-group custom-control-inline w-75">
+				<label for="location" class="h3 mr-3 w-50">Event Location: </label>
+				<input type="location" class="form-control bg-light" placeholder="ex. HNS 168" id="location" name="location" required>
+			</div><br/>
+			<div class="form-group">
+				<label for="description" class="h3">Tell us about your event in 1-2 sentences: </label>
+				<textarea rows="3" maxlength="140" class="form-control bg-light w-75" placeholder="1-2 sentences (140 characters)." id="description" name="description" required></textarea>
+			</div>
+			<div class="text-center" style="margin-left:-5%"><button type="submit" class="btn-lg btn-primary" style="background-color:#003098">Submit</button></div>
+		</form>
+	</main>	
 		
-		<div class="container justify-content-center w-75 py-5 bg-white border shadow" style="margin-top:150px;margin-bottom:100px;margin-left:auto;margin-right:auto;">
-			<h1 class="text-center">Submit an Event</h1>
-			<br/><hr class="w-75"/><br/>
-			<form name="submit-event" action="{{ url_for('handle_event_submission') }}" method="post" enctype="multipart/form-data" style="margin-left:10%">
-				<div class="form-group custom-control-inline w-75">
-					<label for="name" class="h3 mr-3 w-50">Your Name: </label>
-					<input type="text" class="form-control bg-light" placeholder="Enter name" id="name" name="name" required>
-				</div><br/>
-				<div class="form-group custom-control-inline w-75">
-					<label for="email" class="h3 mr-3 w-50">Your Email: </label>
-					<input type="email" class="form-control bg-light" placeholder="Enter email" id="email" name="email" required>
-				</div><hr class="w-75" style="margin-left:5%"/>
-				<div class="form-group custom-control-inline w-75">
-					<label for="title" class="h3 mr-3 w-50">Event Name: </label>
-					<input type="text" class="form-control bg-light" placeholder="Enter event name" id="title" name="title" max-length="50" required>
-				</div><br/>
-				<div class="form-group custom-control-inline w-75">
-					<label for="date" class="h3 mr-3 w-50">Event Date: </label>
-					<input type="date" class="form-control bg-light" placeholder="mm/dd/yyyy" id="date" name="date" required>
-				</div><br/>
-				<div class="form-group custom-control-inline w-75">
-					<label for="time" class="h3 mr-3 w-50">Event Time: </label>
-					<input type="time" class="form-control bg-light" placeholder="--:-- --" id="time" name="time" required>
-				</div><br/>
-				<div class="form-group custom-control-inline w-75">
-					<label for="location" class="h3 mr-3 w-50">Event Location: </label>
-					<input type="location" class="form-control bg-light" placeholder="ex. HNS 168" id="location" name="location" required>
-				</div><br/>
-				<div class="form-group">
-					<label for="description" class="h3">Tell us about your event in 1-2 sentences: </label>
-					<textarea rows="3" maxlength="140" class="form-control bg-light w-75" placeholder="1-2 sentences (140 characters)." id="description" name="description" required></textarea>
-				</div>
-				<div class="text-center" style="margin-left:-5%"><button type="submit" class="btn-lg btn-primary" style="background-color:#003098">Submit</button></div>
-			</form>
-		</div>
-		
-		
-		<div class="container-fluid p-1" style="margin-left:-1%;width:101.8%;background-color:#003098">
-			<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
-		</div>
-	</div>
+	<footer role="contentinfo" class="container-fluid p-1" style="margin-left:-1%;width:101.8%;background-color:#003098">
+		<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
+	</footer>
 </body>
 {% endblock %}

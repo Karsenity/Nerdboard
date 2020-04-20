@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <body class="bg-light">
-	<div class="container-fluid">
-		<nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#003098">
-			<a class="navbar-brand" href="submit.html"><h2 style="font-family:'Share Tech Mono','Lucida Console',Monaco,monospace">Comp Sci Corner</h2></a>
+	<header role="banner" class="container-fluid">
+		<nav role="navigation" class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#003098">
+			<a class="navbar-brand" href="{{ url_for('choose_submission') }}"><h2 style="font-family:'Share Tech Mono','Lucida Console',Monaco,monospace">Comp Sci Corner</h2></a>
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					<a class="nav-link dropdown-toggle" href="{{ url_for('choose_submission') }}" id="navbardrop" data-toggle="dropdown">
 						Make a Submission
 					</a>
 					<div class="dropdown-menu">
@@ -22,7 +22,9 @@
 				</li>
 			</ul>
 		</nav>
-		
+	</header>
+	
+	<main role="main">
 		<div class="container text-center justify-content-center" style="margin-top:150px;margin-bottom:100px;margin-left:auto;margin-right:auto">
 			<h1>Select a submission option below:</h1>
 		</div>
@@ -32,7 +34,7 @@
 				<div class="card shadow rounded btn-primary" style="width:400px;background-color:#003098">
 					<div class="card-body text-center">
 						<img class="card-img-top" src="tmp.png" width="300" height="300" alt="" />
-						<h3 class="card-title">Submit a Project</h3>
+						<p class="h3 card-title">Submit a Project</h3>
 					</div>
 				</div>
 			</a>
@@ -40,15 +42,15 @@
 				<div class="card shadow rounded btn-primary" style="width:400px;background-color:#003098">
 					<div class="card-body text-center">
 						<img class="card-img-top" src="tmp.png" width="300" height="300" alt="" />
-						<h3 class="card-title">Submit an Event</h3>
+						<p class="h3 card-title">Submit an Event</h3>
 					</div>
 				</div>
 			</a>
 		</div>
-		
-		<div class="container-fluid p-1 fixed-bottom" style="background-color:#003098">
-			<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
-		</div>
-	</div>
+	</main>
+	
+	<!--footer role="contentinfo" class="container-fluid p-1 fixed-bottom" style="background-color:#003098">
+		<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
+	</footer-->
 </body>
 {% endblock %}

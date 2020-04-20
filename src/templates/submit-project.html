@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <body style="background-color:#BAC2D1">
-	<div class="container-fluid">
-		<nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#003098">
-			<a class="navbar-brand" href="submit.html"><h2 style="font-family:'Share Tech Mono','Lucida Console',Monaco,monospace">Comp Sci Corner</h2></a>
+	<header role="banner" class="container-fluid">
+		<nav role="navigation" class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#003098">
+			<a class="navbar-brand" href="{{ url_for('choose_submission') }}"><h2 style="font-family:'Share Tech Mono','Lucida Console',Monaco,monospace">Comp Sci Corner</h2></a>
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					<a class="nav-link dropdown-toggle" href="{{ url_for('home') }}" id="navbardrop" data-toggle="dropdown">
 						Make a Submission
 					</a>
 					<div class="dropdown-menu">
@@ -22,54 +22,52 @@
 				</li>
 			</ul>
 		</nav>
-		
-		<div class="container justify-content-center w-75 py-5 bg-white border shadow" style="margin-top:150px;margin-bottom:100px;margin-left:auto;margin-right:auto;">
-			<h1 class="text-center">Submit a Project</h1>
-			<br/><hr class="w-75"/><br/>
-			<form name="submit-project" action="{{ url_for('handle_trailer_submission') }}" method="post" enctype="multipart/form-data" style="margin-left:10%">
-				<!--Name-->
-				<div class="form-group custom-control-inline w-75">
-					<label for="name" class="h3 mr-3 w-50">Your Name: </label>
-					<input type="text" class="form-control bg-light" placeholder="Enter name" id="name" name="name" required>
-				</div><br/>
-				<!--Email-->
-				<div class="form-group custom-control-inline w-75">
-					<label for="email" class="h3 mr-3 w-50">Your Email: </label>
-					<input type="email" class="form-control bg-light" placeholder="Enter email" id="email" name="email" required>
+	</header>
+	
+	<main role="main" class="container justify-content-center w-75 py-5 bg-white border shadow" style="margin-top:150px;margin-bottom:100px;margin-left:auto;margin-right:auto;">
+		<h1 class="text-center">Submit a Project</h1>
+		<br/><hr class="w-75"/><br/>
+		<form role="form" name="submit-project" action="{{ url_for('handle_trailer_submission') }}" method="post" enctype="multipart/form-data" style="margin-left:10%">
+			<!--Name-->
+			<div class="form-group custom-control-inline w-75">
+				<label for="name" class="h3 mr-3 w-50">Your Name: </label>
+				<input type="text" class="form-control bg-light" placeholder="Enter name" id="name" name="name" required>
+			</div><br/>
+			<!--Email-->
+			<div class="form-group custom-control-inline w-75">
+				<label for="email" class="h3 mr-3 w-50">Your Email: </label>
+				<input type="email" class="form-control bg-light" placeholder="Enter email" id="email" name="email" required>
+			</div>
+			<!--Display Email?-->
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input bg-light" id="display-email" name="display-email">
+				<label class="custom-control-label h5" for="display-email">Display my email with my project on the comp sci board</label>
+			</div>
+			<hr class="w-75" style="margin-left:5%"/>
+			<!--Title-->
+			<div class="form-group custom-control-inline w-75">
+				<label for="title" class="h3 mr-3 w-75">Title of Your Project: </label>
+				<input type="text" class="form-control bg-light" placeholder="Enter title" id="title" name="title" required>
+			</div><br/>
+			<!--Trailer-->
+			<div class="form-group">
+				<label for="choose-trailer" class="h3 mr-3 w-75">Add a picture or 10-20 second video (see submission guidelines on the right): </label>
+				<div class="custom-file custom-control-inline">
+					<input type="file" class="custom-file-input" id="choose-trailer" name="trailer">
 				</div>
-				<!--Display Email?-->
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input bg-light" id="display-email" name="display-email">
-					<label class="custom-control-label h5" for="display-email">Display my email with my project on the comp sci board</label>
-				</div>
-				<hr class="w-75" style="margin-left:5%"/>
-				<!--Title-->
-				<div class="form-group custom-control-inline w-75">
-					<label for="title" class="h3 mr-3 w-75">Title of Your Project: </label>
-					<input type="text" class="form-control bg-light" placeholder="Enter title" id="title" name="title" required>
-				</div><br/>
-				<!--Trailer-->
-				<div class="form-group">
-					<label for="choose-trailer" class="h3 mr-3 w-75">Add a picture or 10-20 second video (see submission guidelines on the right): </label>
-					<div class="custom-file custom-control-inline">
-						<input type="file" class="custom-file-input" id="choose-trailer" name="trailer">
-						<label class="custom-file-label bg-light w-50" for="choose-trailer">Choose File</label>
-					</div>
-				</div>
-				<!--Link-->
-				<div class="form-group">
-					<label for="link" class="h3">Add a short link to your project (optional): </label>
-					<input type="url" class="form-control bg-light w-50" placeholder="Enter URL" id="link" name="link" required>
-				</div><br/>
-				<!--Submit-->
-				<div class="text-center" style="margin-left:-5%"><button type="submit" class="btn-lg btn-primary" style="background-color:#003098">Submit</button></div>
-			</form>
-		</div>
-		
-		
-		<div class="container-fluid p-1" style="margin-left:-1%;width:101.8%;background-color:#003098">
-			<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
-		</div>
-	</div>
+			</div>
+			<!--Link-->
+			<div class="form-group">
+				<label for="link" class="h3">Add a short link to your project (optional): </label>
+				<input type="url" class="form-control bg-light w-50" placeholder="Enter URL" id="link" name="link" required>
+			</div><br/>
+			<!--Submit-->
+			<div class="text-center" style="margin-left:-5%"><button type="submit" class="btn-lg btn-primary" style="background-color:#003098">Submit</button></div>
+		</form>
+	</main>
+	
+	<footer class="container-fluid p-1" style="margin-left:-1%;width:101.8%;background-color:#003098">
+		<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
+	</footer>
 </body>
 {% endblock %}

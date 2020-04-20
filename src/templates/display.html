@@ -2,16 +2,16 @@
 {% block content %}
 <div id="container">
 
-    <div id="sidebar">
-        <div id="logo_header">
+    <main role="main" aria-label="events" id="sidebar">
+        <div role="banner" id="logo_header">
             Comp Sci Corner
         </div>
         <div id="events">
-            Events
+            <h1>Events</h1>
         </div>
-    </div>
+    </main>
 
-    <div id="trailers">
+    <main role="main" aria-label="trailers" id="trailers">
         <div id="video_player">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -27,10 +27,11 @@
             </div>
         </div>
 
-        <div id="trailer_description">
-            Trailer Descriptions
-        </div>
-    </div>
+        <aside role="complementary" id="trailer_description">
+            <h1 class="text-white">Project Name</h1>
+			<h2 class="text-white">Project Author</h2>
+        </aside>
+    </main>
 </div>
 
 <script src="{{ url_for('static', filename='js/display.js') }}"></script>
