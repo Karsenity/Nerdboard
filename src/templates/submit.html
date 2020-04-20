@@ -25,7 +25,7 @@
 	</header>
 	
 	<main role="main">
-		<div class="container text-center justify-content-center" style="margin-top:150px;margin-bottom:100px;margin-left:auto;margin-right:auto">
+		<div class="container text-center justify-content-center" style="margin-top:150px;margin-bottom:50px;margin-left:auto;margin-right:auto">
 			<h1>Select a submission option below:</h1>
 		</div>
 		
@@ -33,7 +33,7 @@
 			<a href="{{ url_for('submit_project') }}">
 				<div class="card shadow rounded btn-primary" style="width:400px;background-color:#003098">
 					<div class="card-body text-center">
-						<img class="card-img-top" src="tmp.png" width="300" height="300" alt="" />
+						<img class="card-img-top" src="{{ url_for('static', filename='project.png') }}" width="300" height="300" alt="" />
 						<p class="h3 card-title">Submit a Project</h3>
 					</div>
 				</div>
@@ -41,7 +41,7 @@
 			<a href="{{ url_for('submit_event') }}">
 				<div class="card shadow rounded btn-primary" style="width:400px;background-color:#003098">
 					<div class="card-body text-center">
-						<img class="card-img-top" src="tmp.png" width="300" height="300" alt="" />
+						<img class="card-img-top" src="{{ url_for('static', filename='event.png') }}" width="300" height="300" alt="" />
 						<p class="h3 card-title">Submit an Event</h3>
 					</div>
 				</div>
