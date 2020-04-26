@@ -1,9 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
 <body class="bg-light">
+	<style>
+		.bg-primary {
+			background-color: #003098
+		}
+
+		.btn-primary {
+			background-color: #003098
+		}
+
+		a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover, .btn-primary:hover, .btn-primary.focus, .btn-primary:focus {
+			background-color: #0049e6
+		}
+
+		.navbar {
+			background-color: #003098
+		}
+
+		.navbar-dark .navbar-brand {
+			color: #fff;
+			font-family: 'Share Tech Mono', 'Lucida Console', Monaco, monospace;
+		}
+
+		.navbar-dark .navbar-nav .nav-link {
+			color: #fff
+		}
+
+		.navbar-dark .navbar-nav .nav-link:focus,
+		.navbar-dark .navbar-nav .nav-link:hover {
+			color: #fff;
+			text-decoration: underline;
+		}
+
+		.bg-grey {
+			background-color: #BAC2D1
+		}
+	</style>
+
 	<header role="banner" class="container-fluid">
-		<nav role="navigation" class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#003098">
-			<a class="navbar-brand" href="{{ url_for('home') }}"><h2 style="font-family:'Share Tech Mono','Lucida Console',Monaco,monospace">Comp Sci Corner</h2></a>
+		<nav role="navigation" class="navbar navbar-expand-sm navbar-dark fixed-top">
+			<a class="navbar-brand" href="{{ url_for('choose_submission') }}"><h1>Comp Sci Corner</h1></a>
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="{{ url_for('choose_submission') }}" id="navbardrop" data-toggle="dropdown">
@@ -18,7 +55,7 @@
 				  <a class="nav-link" href="{{ url_for('display_page') }}">Visit Display</a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link" href="#">Admin Tools</a>
+				  <a class="nav-link" href="{{ url_for('admin_login') }}">Admin Tools</a>
 				</li>
 			</ul>
 		</nav>
@@ -29,23 +66,23 @@
 			<h1>Select a submission option below:</h1>
 		</div>
 		
-		<div class="card-deck justify-content-center">
-			<a href="{{ url_for('submit_project') }}">
-				<div class="card shadow rounded btn-primary" style="width:400px;background-color:#003098">
+		<div class="card-deck justify-content-center w-50 mx-auto">
+			<div class="card shadow rounded">
+				<a href="{{ url_for('submit_project') }}" class="stretched-link btn-primary">
 					<div class="card-body text-center">
 						<img class="card-img-top" src="{{ url_for('static', filename='project.png') }}" width="300" height="300" alt="" />
 						<p class="h3 card-title">Submit a Project</p>
 					</div>
-				</div>
-			</a>
-			<a href="{{ url_for('submit_event') }}">
-				<div class="card shadow rounded btn-primary" style="width:400px;background-color:#003098">
+				</a>
+			</div>
+			<div class="card shadow rounded">
+				<a href="{{ url_for('submit_event') }}" class="stretched-link btn-primary" >
 					<div class="card-body text-center">
 						<img class="card-img-top" src="{{ url_for('static', filename='event.png') }}" width="300" height="300" alt="" />
 						<p class="h3 card-title">Submit an Event</p>
 					</div>
-				</div>
-			</a>
+				</a>
+			</div>
 		</div>
 	</main>
 	

@@ -1,9 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
-<body style="background-color:#BAC2D1">
+<body class="bg-grey">
+	<style>
+		.bg-primary {
+			background-color: #003098
+		}
+
+		.btn-primary {
+			background-color: #003098
+		}
+
+		a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover, .btn-primary:hover, .btn-primary.focus, .btn-primary:focus {
+			background-color: #0049e6
+		}
+
+		.navbar {
+			background-color: #003098
+		}
+
+		.navbar-dark .navbar-brand {
+			color: #fff;
+			font-family: 'Share Tech Mono', 'Lucida Console', Monaco, monospace;
+		}
+
+		.navbar-dark .navbar-nav .nav-link {
+			color: #fff
+		}
+
+		.navbar-dark .navbar-nav .nav-link:focus,
+		.navbar-dark .navbar-nav .nav-link:hover {
+			color: #fff;
+			text-decoration: underline;
+		}
+
+		.bg-grey {
+			background-color: #BAC2D1
+		}
+	</style>
+
 	<header role="banner" class="container-fluid">
-		<nav role="navigation" class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#003098">
-			<a class="navbar-brand" href="{{ url_for('choose_submission') }}"><h2 style="font-family:'Share Tech Mono','Lucida Console',Monaco,monospace">Comp Sci Corner</h2></a>
+		<nav role="navigation" class="navbar navbar-expand-sm navbar-dark fixed-top">
+			<a class="navbar-brand" href="{{ url_for('choose_submission') }}"><h1>Comp Sci Corner</h1></a>
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="{{ url_for('choose_submission') }}" id="navbardrop" data-toggle="dropdown">
@@ -18,7 +55,7 @@
 				  <a class="nav-link" href="{{ url_for('display_page') }}">Visit Display</a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link" href="#">Admin Tools</a>
+				  <a class="nav-link" href="{{ url_for('admin_login') }}">Admin Tools</a>
 				</li>
 			</ul>
 		</nav>

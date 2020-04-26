@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect
 import os
 
-#from src.common.database import Database
-#from src.models.trailer import Trailer
+# from src.common.database import Database
+# from src.models.trailer import Trailer
 from common.database import Database
 from models.trailer import Trailer
 from models.event import Event
@@ -12,16 +12,18 @@ app = Flask(__name__)
 
 @app.before_first_request
 def initialize_database():
-    #pass
+    # pass
     Database.initialize()
 
 
 uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
 
+
 # Home Page (Temp)
 @app.route('/')
 def home():
     return choose_submission()
+
 
 # Submission Choice Page
 @app.route('/submit')
@@ -36,18 +38,19 @@ def display_page():
 
     return render_template("display.html", len=len(video_urls), videos=video_urls)
 
+
 # Handles a file upload
-@app.route('/handleTrailerSubmission', methods=['POST'])
+@app.route('/submit/trailer/handle-submission', methods=['POST'])
 def handle_trailer_submission():
     author = request.form.get('name')
     email = request.form.get('email')
     display_email = request.form.get('display-email')
     title = request.form.get('title')
-    
+
     trailer = request.files.get('trailer')
     trailer_name = os.path.join(uploads_dir, trailer.filename)
     trailer.save(trailer_name)
-    
+
     link = request.form.get('link')
 
     new_post = Trailer(author, email, display_email, title, trailer_name, link)
@@ -57,7 +60,7 @@ def handle_trailer_submission():
 
 
 # Handles a file upload
-@app.route('/handleEventSubmission', methods=['POST'])
+@app.route('/submit/event/handle-submission', methods=['POST'])
 def handle_event_submission():
     author = request.form.get('name')
     email = request.form.get('email')
@@ -74,17 +77,33 @@ def handle_event_submission():
 
 
 # Goes to the submission confirmation
-@app.route('/confirm-submission')
+@app.route('/submit/confirm')
 def confirm_submission():
     return render_template("confirm-submission.html")
 
+
 # Submit Project
-@app.route('/submit-project')
+@app.route('/submit/project')
 def submit_project():
     return render_template("submit-project.html")
 
+
 # Submit Event
-@app.route('/submit-event')
+@app.route('/submit/event')
 def submit_event():
     return render_template("submit-event.html")
 
+# Admin Login
+@app.route('/admin/login')
+def admin_login():
+    pass
+
+# Trailer Review
+@app.route('/admin/review/trailers')
+def review_trailers():
+    pass
+
+# Event Review():
+@app.route('/admin/review/events')
+def review_events():
+    pass
