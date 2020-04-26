@@ -12,8 +12,8 @@ app = Flask(__name__)
 
 @app.before_first_request
 def initialize_database():
-    pass
-    #Database.initialize()
+    #pass
+    Database.initialize()
 
 
 uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
@@ -46,7 +46,7 @@ def handle_trailer_submission():
     
     trailer = request.files.get('trailer')
     trailer_name = os.path.join(uploads_dir, trailer.filename)
-    trailer.save(os.path.join(uploads_dir, trailer_name))
+    trailer.save(trailer_name)
     
     link = request.form.get('link')
 
@@ -76,7 +76,7 @@ def handle_event_submission():
 # Goes to the submission confirmation
 @app.route('/confirm-submission')
 def confirm_submission():
-    return render_template("submit.html")
+    return render_template("confirm-submission.html")
 
 # Submit Project
 @app.route('/submit-project')
