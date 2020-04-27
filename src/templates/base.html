@@ -34,8 +34,43 @@
 	<![endif]-->
 </head>
 <body>
-{% block content%}
+<style>
+		.bg-primary {
+			background-color: #003098
+		}
 
+		.btn-primary {
+			background-color: #003098
+		}
+
+		a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover, .btn-primary:hover, .btn-primary.focus, .btn-primary:focus {
+			background-color: #0049e6
+		}
+
+		.navbar {
+			background-color: #003098
+		}
+
+		.navbar-dark .navbar-brand {
+			color: #fff;
+			font-family: 'Share Tech Mono', 'Lucida Console', Monaco, monospace;
+		}
+
+		.navbar-dark .navbar-nav .nav-link {
+			color: #fff
+		}
+
+		.navbar-dark .navbar-nav .nav-link:focus,
+		.navbar-dark .navbar-nav .nav-link:hover {
+			color: #fff;
+			text-decoration: underline;
+		}
+
+		.bg-grey {
+			background-color: #BAC2D1
+		}
+	</style>
+{% block content%}
 {% endblock %}
 </body>
 </html>

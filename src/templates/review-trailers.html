@@ -22,20 +22,28 @@
 						Admin Tools
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="{{ url_for('review_trailers') }}">Review Projects</a>
+						<a class="dropdown-item active" href="{{ url_for('review_trailers') }}">Review Projects</a>
 						<a class="dropdown-item" href="{{ url_for('review_events') }}">Review Events</a>
 					</div>
 				</li>
 			</ul>
 		</nav>
 	</header>
-	
-	<main role="main">
-		<div class="container text-center justify-content-center bg-white border shadow p-5" style="margin-top:300px;margin-left:auto;margin-right:auto">
-			<h1>Thank you for your submission!</h1>
-            <p class="h2">You should receive an email confirming your submission shortly.</p>
-            <p class="h2">Click <a href="{{ url_for('choose_submission') }}">here</a> to make another submission.</p>
-		</div>
+
+	<aside role="complementary" class="container py-3 float-left bg-white border shadow" style="width:20%;margin-top:150px;margin-left:8%">
+		<h1>Example Project</h1>
+		<hr>
+		<p class="card-title">Submitted by John Doe</p>
+		<p>Github Link</p>
+		<hr>
+		<button type="button" class="btn btn-success">Approve</button>
+		<button type="button" class="btn btn-danger">Deny</button>
+	</aside>
+
+	<main role="main" class="container justify-content-center float-right w-75 p-0" style="margin-top:150px;margin-right:8%">
+		<video id="video" width="100%" class="border shadow" controls muted>
+			<source src="{{ url_for('static', filename='submissions/trailers/test_trailer.mp4') }}" type="video/mp4">
+		</video>
 	</main>
 	
 	<!--footer role="contentinfo" class="container-fluid p-1 fixed-bottom" style="background-color:#003098">

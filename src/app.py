@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect
+#from flask_login import LoginManager
 import os
 
 # from src.common.database import Database
@@ -9,6 +10,8 @@ from models.event import Event
 
 app = Flask(__name__)
 
+#login = LoginManager(app)
+#login.login_view = 'admin_login'
 
 @app.before_first_request
 def initialize_database():
@@ -94,14 +97,19 @@ def submit_event():
     return render_template("submit-event.html")
 
 # Admin Login
+@app.route('/admin')
+def admin():
+    return admin_login()
+
 @app.route('/admin/login')
 def admin_login():
     pass
 
 # Trailer Review
-@app.route('/admin/review/trailers')
+@app.route('/admin/review/projects')
+#@login_required
 def review_trailers():
-    pass
+    return render_template("review-trailers.html")
 
 # Event Review():
 @app.route('/admin/review/events')
