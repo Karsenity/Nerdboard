@@ -30,9 +30,10 @@
 		</nav>
 	</header>
 	
-	<main role="main" class="container justify-content-center w-75 py-5 bg-white border shadow" style="margin-top:150px;margin-bottom:100px;margin-left:auto;margin-right:auto;">
+	<main role="main" class="container justify-content-center w-50 py-5 float-left bg-white border shadow" style="margin-top:150px;margin-bottom:100px;margin-left:12%">
 		<h1 class="text-center">Submit a Project</h1>
-		<br/><hr class="w-75"/><br/>
+		<p class="h4 text-center text-secondary">Please read the guidelines on the right before posting.</p>
+		<hr class="w-75"/><br/>
 		<form role="form" name="submit-project" action="{{ url_for('handle_trailer_submission') }}" method="post" enctype="multipart/form-data" style="margin-left:10%">
 			<!--Name-->
 			<div class="form-group custom-control-inline w-75">
@@ -57,7 +58,7 @@
 			</div><br/>
 			<!--Trailer-->
 			<div class="form-group">
-				<label for="choose-trailer" class="h3 mr-3 w-75" id="instructions">Add a 10-30 second .mp4 video (see submission guidelines on the right): </label>
+				<label for="choose-trailer" class="h3 mr-3 w-75" id="instructions">Add a .mp4 video of your project (see guidelines): </label>
 				<div class="custom-file custom-control-inline w-75">
 					<input type="file" class="custom-file-input" id="choose-trailer" name="trailer" aria-labelledby="instructions chooseFile">
 					<p class="custom-file-label bg-light" id="chooseFile">Choose File</p>
@@ -72,10 +73,30 @@
 			<div class="text-center" style="margin-left:-5%"><button type="submit" class="btn-lg btn-primary">Submit</button></div>
 		</form>
 	</main>
-	
-	<footer class="container-fluid p-1" style="margin-left:-1%;width:101.8%;background-color:#003098">
+
+	<aside role="complementary" class="container w-25 py-3 float-right bg-white border shadow" style="margin-top:150px;margin-bottom:100px;margin-right:12%">
+		<h1 class="h2">Submission Guidelines</h1>
+		<p>Asterisks mark required or non-negotiable considerations. Other guidelines are suggestions, but following them will make it more likely that your submission will be approved.</p>
+		<h2 class="h4">Video Submission:</h2>
+		<ul>
+			<li>*Submission should be no longer than 30 seconds (10-20 seconds is ideal).</li>
+			<li>*The Comp Sci Corner display board has no sound. Don't rely on sound in your video.</li>
+			<li>Submission should include screenshots and/or video clips of your project being demonstrated.</li>
+			<li>Screenshots of pure code are uninteresting. You can include them, but don't make them the center of your presentation.</li>
+			<li>Include subtitles describing your project. Make sure they're brief enough to read in the time they're on the screen.</li>
+		</ul>
+		<h2 class="h4">Accessibility Guidelines:</h2>
+		<ul>
+			<li>*Again, the comp sci board has no sound.</li>
+			<li>*Make all text large enough to be read 5 to 10 feet away from the screen.</li>
+			<li>*Use <a href="https://webaim.org/resources/contrastchecker/">this contrast checker</a> to ensure the colors of your text and background contrast sufficiently.</li>
+			<li>Consider using white text with a black outline for your subtitles.</li>
+		</ul>
+	</aside>
+
+	<!--footer class="container-fluid p-1" style="margin-left:-1%;width:101.8%;background-color:#003098">
 		<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
-	</footer>
+	</footer-->
 
 	<!--Script for having the file name show up in the choose file box-->
 	<script>
