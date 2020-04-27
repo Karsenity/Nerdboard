@@ -8,27 +8,28 @@ from common.database import Database
 
 class Trailer(object):
 
-    def __init__(self, author, email, display_email, title, trailer_path, link=None, _id=None):
+    def __init__(self, author, email, aoc, title, description, picture=None, _id=None):
         self.author = author
         self.email = email
-        self.display_email = display_email
+        self.aoc = aoc
         self.title = title
-        self.trailer_path = trailer_path
-        self.link = link
+        self.description = description
+        self.picture = picture
         self._id = uuid.uuid4().hex if _id is None else _id
 
     def save_to_mongo(self):
-        Database.insert(collection='pending_trailers', data=self.json())
+        Database.insert(collection='pending_trailers',
+                        data=self.json())
 
     def json(self):
         return {
             '_id': self._id,
             'author': self.author,
             'email': self.email,
-            'display_email': self.display_email,
+            'aoc': self.aoc,
             'title': self.title,
-            'trailer': self.trailer_path,
-            'link': self.link
+            'description': self.description,
+            'picture': self.picture,
         }
 
     @classmethod

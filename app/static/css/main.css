@@ -1,7 +1,3 @@
-header, nav, main, footer, article, section, aside {
-   display:block;
-}
-
 body {
 	background-color: #FFFFFF;
 }
@@ -52,6 +48,8 @@ body {
 	height: 20vh;
 	float: bottom;
 }
+
+
 
 .text1 {
 	position: absolute;

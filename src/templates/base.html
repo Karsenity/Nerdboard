@@ -3,24 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Nerdboard</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
     <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Bootstrap and Dependencies -->
+    <!-- Bootstrap and Dependencies -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Re-ordered because Bootstrap was overriding it -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<!--Lets HTML5 elements display properly for dinosaurs still using IE-->
+	<!--[if lt IE 9]>
+		<script>
+			var e = ("abbr,article,aside,audio,canvas,datalist,details," +
+				"figure,footer,header,main,mark,menu,meter,nav,output," +
+				"progress,section,time,video").split(',');
+			for (var i = 0; i < e.length; i++) {
+				document.createElement(e[i]);
+			}
+		</script>
+	<![endif]-->
 </head>
 <body>
-{% block content%}
+<style>
+		.bg-primary {
+			background-color: #003098
+		}
 
+		.btn-primary {
+			background-color: #003098
+		}
+
+		a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover, .btn-primary:hover, .btn-primary.focus, .btn-primary:focus {
+			background-color: #0049e6
+		}
+
+		.navbar {
+			background-color: #003098
+		}
+
+		.navbar-dark .navbar-brand {
+			color: #fff;
+			font-family: 'Share Tech Mono', 'Lucida Console', Monaco, monospace;
+		}
+
+		.navbar-dark .navbar-nav .nav-link {
+			color: #fff
+		}
+
+		.navbar-dark .navbar-nav .nav-link:focus,
+		.navbar-dark .navbar-nav .nav-link:hover {
+			color: #fff;
+			text-decoration: underline;
+		}
+
+		.bg-grey {
+			background-color: #BAC2D1
+		}
+	</style>
+{% block content%}
 {% endblock %}
 </body>
 </html>

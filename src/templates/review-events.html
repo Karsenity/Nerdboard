@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<body class="bg-grey">
+	<header role="banner" class="container-fluid">
+		<nav role="navigation" class="navbar navbar-expand-sm navbar-dark fixed-top">
+			<a class="navbar-brand" href="{{ url_for('choose_submission') }}"><h1>Comp Sci Corner</h1></a>
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="{{ url_for('choose_submission') }}" id="navbardrop" data-toggle="dropdown">
+						Make a Submission
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{{ url_for('submit_project') }}">Submit a Project</a>
+						<a class="dropdown-item" href="{{ url_for('submit_event') }}">Submit an Event</a>
+					</div>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="{{ url_for('display_page') }}">Visit Display</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="{{ url_for('admin') }}" id="navbardrop-admin" data-toggle="dropdown">
+						Admin Tools
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{{ url_for('review_trailers') }}">Review Projects</a>
+						<a class="dropdown-item active" href="{{ url_for('review_events') }}">Review Events</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+	</header>
+
+	<main role="main" class="card-columns p-5 mx-5" style="margin-top:150px;margin-left:auto;margin-right:auto">
+        {%for i in range(9)%}
+        <div class="card bg-white border shadow">
+            <div class="card-body">
+                <h1 class="card-title">Event Name</h1>
+                <p class="card-text">Submitted by John Doe</p>
+                <hr>
+                <p class="card-text text-secondary">April 25, 2020 @ 6:45 PM</p>
+                <p class="card-text text-secondary">HNS 168</p>
+                <p class="card-text">Here is a short description of my event, roughly 20-25 words. This is what will appear underneath the title and location on the actual board.</p>
+                <hr>
+                <button type="button" class="btn btn-success">Approve</button>
+			    <button type="button" class="btn btn-danger">Deny</button>
+            </div>
+        </div>
+        {%endfor%}
+    </main>
+	
+	<!--footer role="contentinfo" class="container-fluid p-1 fixed-bottom" style="background-color:#003098">
+		<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
+	</footer-->
+</body>
+{% endblock %}
