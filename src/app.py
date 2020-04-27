@@ -114,4 +114,4 @@ def review_trailers():
 # Event Review():
 @app.route('/admin/review/events')
 def review_events():
-    pass
+    return render_template("review-events.html")
