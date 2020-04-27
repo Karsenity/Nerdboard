@@ -38,8 +38,9 @@ def choose_submission():
 def display_page():
     files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
     video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
+    events = Event.get_all()
 
-    return render_template("display.html", len=len(video_urls), videos=video_urls)
+    return render_template("display.html", len=len(video_urls), videos=video_urls, events=events, n_events=len(events))
 
 
 # Handles a file upload
