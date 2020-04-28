@@ -8,24 +8,69 @@ body {
 
 #sidebar {
 	width: 20%;
+	height: 100vh;
 	float: left;
 }
 
-#logo_header {
-	background-color: #194F90;
-	height: calc(20vw / 6);
-	float:top;
+	#logo_header {
+		background-color: #194F90;
+		height: 3vw;
+		float:top;
 
-	font-family: 'Share Tech Mono', monospace;
-	font-size: 2.35vw;
-	color: #FDF8F8;
-	text-align: center;
-}
+		font-family: 'Share Tech Mono', monospace;
+		font-size: 2.35vw;
+		color: #FDF8F8;
+		text-align: center;
+	}
 
-#events {
-	height: 100%;
-	float:bottom;
-}
+	#events {
+		height: calc(100vh - 3vw);
+		float:bottom;
+	}
+		.event-header {
+			font-family: 'Droid Sans', Monospaced;
+			font-size: 1.6vw;
+			font-weight: 900;
+			font-style: normal;
+			line-height: 73%;
+			padding:0;
+			padding-left: 1vw;
+			margin: 0;
+			margin-top: 2vh;
+		}
+
+		.event-info {
+			font-family:'Droid Sans', serif;
+			font-size: 1vw;
+			color: #6A6262;
+			padding:0;
+			padding-left: 1.2vw;
+			padding-right: 1vw;
+			margin: 0;
+			word-wrap: break-word;
+
+		}
+
+		.event-body {
+			font-family:'Droid Sans', serif;
+			font-size: 1vw;
+			padding:0;
+			padding-left: 1.2vw;
+			padding-right: 1vw;
+			margin: 0;
+			word-wrap: break-word;
+		}
+
+		.event-divider {
+			height: 2px;
+			width: 65%;
+			margin: auto;
+			margin-bottom: 5px;
+			background-color: #C0C0C0;
+		}
+		#events::-webkit-scrollbar {
+  			display: none;
+		}
 
 #trailers {
 	background-color: #555555;
@@ -96,7 +141,28 @@ body {
 	mix-blend-mode: normal;
 }
 
+
+.vert .carousel-item-next.carousel-item-left,
+.vert .carousel-item-prev.carousel-item-right {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+
+.vert .carousel-item-next,
+.vert .active.carousel-item-right {
+    -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100% 0);
+}
+
+.vert .carousel-item-prev,
+.vert .active.carousel-item-left {
+-webkit-transform: translate3d(0,-100%, 0);
+        transform: translate3d(0,-100%, 0);
+}
+
+
 html,body{
-height: 100%;
-font-family: 'Numans', sans-serif;
+	height: 100%;
+	font-family: 'Numans', sans-serif;
+	scroll-behavior: smooth;
 }
