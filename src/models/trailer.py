@@ -22,19 +22,24 @@ class Trailer(object):
 
     def json(self):
         return {
-            '_id': self._id,
             'author': self.author,
             'email': self.email,
             'display_email': self.display_email,
             'title': self.title,
-            'trailer': self.trailer_path,
-            'link': self.link
+            'trailer_path': self.trailer_path,
+            'link': self.link,
+            '_id': self._id
         }
 
     @classmethod
     def from_mongo(cls, id):
         post_data = Database.find_one(collection='pending_trailers', query={'_id': id})
         return cls(**post_data)
+
+    @classmethod
+    def get_all(cls):
+        trailers = Database.find(collection='pending_trailers', query={})
+        return [cls(**trailer) for trailer in trailers]
 
     @classmethod
     def to_gif(cls, video):
