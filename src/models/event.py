@@ -20,6 +20,10 @@ class Event(object):
     def save_to_mongo(self):
         Database.insert(collection='pending_events',
                         data=self.json())
+    def approve(self):
+        q = { '_id': self._id}
+        Database.delete_one(collection='pending_events', query=q)
+        Database.insert(collection='approved_events', data=self.json())
 
     def json(self):
         return {
@@ -45,6 +49,11 @@ class Event(object):
         return cls(**post_data)
 
     @classmethod
-    def get_all(cls):
+    def get_approved(cls):
+        posts = Database.find(collection='approved_events', query={})
+        return [cls(**post) for post in posts]
+
+    @classmethod
+    def get_pending(cls):
         posts = Database.find(collection='pending_events', query={})
         return [cls(**post) for post in posts]

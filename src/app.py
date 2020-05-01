@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect
 #from flask_login import LoginManager
 import os
+import uuid
 
 # from src.common.database import Database
 # from src.models.trailer import Trailer
@@ -38,7 +39,7 @@ def choose_submission():
 def display_page():
     files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
     video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
-    events = Event.get_all()
+    events = Event.get_approved()
 
     return render_template("display.html", len=len(video_urls), videos=video_urls, events=events, n_events=len(events))
 
@@ -50,15 +51,12 @@ def handle_trailer_submission():
     email = request.form.get('email')
     display_email = request.form.get('display-email')
     title = request.form.get('title')
-
     trailer = request.files.get('trailer')
-    trailer_name = os.path.join(uploads_dir, trailer.filename)
-    trailer.save(trailer_name)
-
     link = request.form.get('link')
 
-    new_post = Trailer(author, email, display_email, title, trailer_name, link)
+    new_post = Trailer(author, email, display_email, title, trailer, uploads_dir, link)
     new_post.save_to_mongo()
+    new_post.approve()
 
     return redirect(url_for('confirm_submission'))
 
@@ -76,6 +74,7 @@ def handle_event_submission():
 
     new_post = Event(author, email, title, date, time, location, description)
     new_post.save_to_mongo()
+    #new_post.approve()
 
     return redirect(url_for('confirm_submission'))
 
@@ -97,11 +96,12 @@ def submit_project():
 def submit_event():
     return render_template("submit-event.html")
 
-# Admin Login
+# Admin Home Page
 @app.route('/admin')
 def admin():
     return admin_login()
 
+#Admin Login
 @app.route('/admin/login')
 def admin_login():
     pass
