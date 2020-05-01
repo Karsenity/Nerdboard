@@ -37,11 +37,14 @@ def choose_submission():
 # Display Page
 @app.route('/display')
 def display_page():
-    files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
-    video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
-    events = Event.get_approved()
 
-    return render_template("display.html", len=len(video_urls), videos=video_urls, events=events, n_events=len(events))
+    # files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
+    # video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
+    #, len=len(video_urls), videos=video_urls
+    events = Event.get_approved()
+    trailers = Trailer.get_approved()
+
+    return render_template("display.html", events=events, n_events=len(events), trailers=trailers, n_trailers=len(trailers))
 
 
 # Handles a file upload
@@ -53,7 +56,6 @@ def handle_trailer_submission():
     title = request.form.get('title')
     trailer = request.files.get('trailer')
     link = request.form.get('link')
-
     new_post = Trailer(author, email, display_email, title, trailer, uploads_dir, link)
     new_post.save_to_mongo()
     new_post.approve()
