@@ -25,6 +25,7 @@ body {
 
 	#events {
 		height: calc(100vh - 3vw);
+		background-color: #FDF8F8;
 		float:bottom;
 	}
 		.event-header {
@@ -68,6 +69,7 @@ body {
 			margin-bottom: 5px;
 			background-color: #C0C0C0;
 		}
+
 		#events::-webkit-scrollbar {
   			display: none;
 		}

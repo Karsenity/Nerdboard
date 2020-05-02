@@ -44,6 +44,7 @@ def display_page():
     #, len=len(video_urls), videos=video_urls
     events = Event.get_approved()
     trailers = Trailer.get_approved()
+    print(trailers)
 
     return render_template("display.html", events=events, n_events=len(events), trailers=trailers, n_trailers=len(trailers))
 
@@ -135,7 +136,7 @@ def review_trailers(i):
 
     return render_template("review-trailers.html", n=len(trailers), current=current, i=i, first=first, last=last)
 
-@app.route('/admin/approve/<trailer_id>')
+@app.route('/admin/approve/trailer/<trailer_id>')
 def approve_trailer(trailer_id, index=0):
     Trailer.approve(trailer_id)
     return redirect(url_for('review_trailers', i=index))
@@ -149,9 +150,10 @@ def deny_trailer(trailer_id, index=0):
 @app.route('/admin/review/events')
 def review_events():
     events = Event.get_pending()
+    print(events)
     return render_template("review-events.html", events=events, n=len(events))
 
-@app.route('/admin/approve/<event_id>')
+@app.route('/admin/approve/event/<event_id>')
 def approve_event(event_id):
     Event.approve(event_id)
     return redirect(url_for('review_events'))

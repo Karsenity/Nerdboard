@@ -8,22 +8,14 @@ from src.common.database import Database
 
 class Trailer(object):
 
-    def __init__(self, author, email, display_email, title, uploads_dir, link=None, _id=None):
-        self.author = author
-        self.email = email
-        self.display_email = display_email
-        self.title = title
-        self.link = link
-        self._id = uuid.uuid4().hex if _id is None else _id
-
     def __init__(self, author, email, display_email, title, trailer_path, link=None, _id=None):
         self.author = author
         self.email = email
         self.display_email = display_email
         self.title = title
+        self.trailer_path = trailer_path
         self.link = link
         self._id = uuid.uuid4().hex if _id is None else _id
-        self.trailer_path = trailer_path
 
     def save_to_mongo(self):
         Database.insert(collection='pending_trailers', data=self.json())
@@ -57,8 +49,8 @@ class Trailer(object):
 
     @classmethod
     def get_approved(cls):
-        posts = Database.find(collection='approved_trailers', query={})
-        return [cls(**post) for post in posts]
+        trailers = Database.find(collection='approved_trailers', query={})
+        return [cls(**trailer) for trailer in trailers]
 
     @classmethod
     def get_pending(cls):

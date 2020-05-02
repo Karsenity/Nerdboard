@@ -44,7 +44,7 @@
 						<p class="card-text text-secondary">{{ event.location }}</p>
 						<p class="card-text">{{ event.description }}</p>
 						<hr>
-						<form class="w-25" role="form" action="{{ url_for('approve_event', event_id=event._id) }}">
+						<form class="w-25" role="form" action="{{ url_for('approve_event', event_id=event._id)}}">
 							<button type="submit" class="btn btn-success">Approve</button>
 						</form>
 						<form class="w-25" role="form" action="{{ url_for('deny_event', event_id=event._id) }}">

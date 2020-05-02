@@ -29,14 +29,14 @@ class Event(object):
 
     def json(self):
         return {
-            '_id': self._id,
             'author': self.author,
             'email': self.email,
             'title': self.title,
             'date': self.date,
             'time': self.time,
             'location': self.location,
-            'description': self.description
+            'description': self.description,
+            '_id': self._id,
         }
 
     def date_time(self):
@@ -60,15 +60,19 @@ class Event(object):
 
     @classmethod
     def get_pending(cls):
-        posts = Database.find(collection='pending_events', query={})
-        return [cls(**post) for post in posts]
+        events = Database.find(collection='pending_events', query={})
+        return [cls(**event) for event in events]
 
     @classmethod
     def approve(cls, id):
         q = {'_id': id}
+        print("Starting approval")
         post = Database.find_one(collection='pending_events', query=q)
+        print("Inserting to Database...")
         Database.insert(collection='approved_events', data=post)
+        print("Successfully inserted! Deleting from database....")
         Database.delete_one(collection='pending_events', query=q)
+        print("Successfully deleted!")
 
     @classmethod
     def deny(cls, id):
