@@ -43,11 +43,11 @@
         <div id="video_player">
             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-pause="false">
                 <div class="carousel-inner">
-                    <video id="video" class="carousel-item active" width="100%" autoplay muted>
+                    <video id="video" class="carousel-item active" width="100%" autoplay muted controls>
                         <source src="{{trailers[0].trailer_path}}" type="video/mp4">
                     </video>
                     {%for i in range(1, n_trailers)%}
-                        <video id="video" class="carousel-item" width="100%" autoplay muted>
+                        <video id="video" class="carousel-item" width="100%" autoplay muted controls>
                             <source src="{{trailers[i].trailer_path}}" type="video/mp4">
                         </video>
                     {%endfor%}

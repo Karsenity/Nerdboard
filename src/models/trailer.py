@@ -2,29 +2,31 @@ import uuid
 from datetime import datetime
 from moviepy.editor import *
 
-#from src.common.database import Database
-from common.database import Database
+from src.common.database import Database
+#from common.database import Database
 
 
 class Trailer(object):
 
-    def __init__(self, author, email, display_email, title, trailer, uploads_dir, link=None, _id=None):
+    def __init__(self, author, email, display_email, title, uploads_dir, link=None, _id=None):
         self.author = author
         self.email = email
         self.display_email = display_email
         self.title = title
         self.link = link
         self._id = uuid.uuid4().hex if _id is None else _id
-        self.trailer_path = os.path.join(uploads_dir, self._id)
-        trailer.save(self.trailer_path)
+
+    def __init__(self, author, email, display_email, title, trailer_path, link=None, _id=None):
+        self.author = author
+        self.email = email
+        self.display_email = display_email
+        self.title = title
+        self.link = link
+        self._id = uuid.uuid4().hex if _id is None else _id
+        self.trailer_path = trailer_path
 
     def save_to_mongo(self):
         Database.insert(collection='pending_trailers', data=self.json())
-
-    def approve(self):
-        q = { '_id': self._id}
-        Database.delete_one(collection='pending_trailers', query=q)
-        Database.insert(collection='approved_trailers', data=self.json())
 
     def json(self):
         return {
@@ -62,3 +64,15 @@ class Trailer(object):
     def get_pending(cls):
         posts = Database.find(collection='pending_trailers', query={})
         return [cls(**post) for post in posts]
+
+    @classmethod
+    def approve(cls, id):
+        q = {'_id': id}
+        post = Database.find_one(collection='pending_trailers', query=q)
+        Database.insert(collection='approved_trailers', data=post)
+        Database.delete_one(collection='pending_trailers', query=q)
+
+    @classmethod
+    def deny(cls, id):
+        q = {'_id': id}
+        Database.delete_one(collection='pending_trailers', query=q)

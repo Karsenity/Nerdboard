@@ -3,11 +3,12 @@ from flask import Flask, render_template, request, url_for, redirect
 import os
 import uuid
 
-# from src.common.database import Database
-# from src.models.trailer import Trailer
-from common.database import Database
-from models.trailer import Trailer
-from models.event import Event
+from src.common.database import Database
+from src.models.trailer import Trailer
+from src.models.event import Event
+#from common.database import Database
+#from models.trailer import Trailer
+#from models.event import Event
 
 app = Flask(__name__)
 
@@ -50,15 +51,20 @@ def display_page():
 # Handles a file upload
 @app.route('/submit/trailer/handle-submission', methods=['POST'])
 def handle_trailer_submission():
+    _id = uuid.uuid4().hex
     author = request.form.get('name')
     email = request.form.get('email')
     display_email = request.form.get('display-email')
     title = request.form.get('title')
+
     trailer = request.files.get('trailer')
+    trailer_path = os.path.join(uploads_dir, str(_id) + ".mp4")
+    trailer.save(trailer_path)
+
     link = request.form.get('link')
-    new_post = Trailer(author, email, display_email, title, trailer, uploads_dir, link)
+
+    new_post = Trailer(author, email, display_email, title, trailer_path, link, _id)
     new_post.save_to_mongo()
-    new_post.approve()
 
     return redirect(url_for('confirm_submission'))
 
@@ -76,7 +82,7 @@ def handle_event_submission():
 
     new_post = Event(author, email, title, date, time, location, description)
     new_post.save_to_mongo()
-    #new_post.approve()
+    # new_post.approve()
 
     return redirect(url_for('confirm_submission'))
 
@@ -108,13 +114,49 @@ def admin():
 def admin_login():
     pass
 
-# Trailer Review
+# Trailer Review (Home)
 @app.route('/admin/review/projects')
+def review_trailers_home():
+    return render_template("review-trailers-home.html")
+
+# Trailer Review (Pages)
+@app.route('/admin/review/projects/<i>')
 #@login_required
-def review_trailers():
-    return render_template("review-trailers.html")
+def review_trailers(i):
+    trailers = Trailer.get_pending()
+
+    if len(trailers) == 0:
+        return redirect(url_for('review_trailers_home'))
+
+    first = 0
+    last = len(trailers)-1
+    i = max(first, min(last, int(i)))
+    current = trailers[i]
+
+    return render_template("review-trailers.html", n=len(trailers), current=current, i=i, first=first, last=last)
+
+@app.route('/admin/approve/<trailer_id>')
+def approve_trailer(trailer_id, index=0):
+    Trailer.approve(trailer_id)
+    return redirect(url_for('review_trailers', i=index))
+
+@app.route('/admin/deny/<trailer_id>', methods=['GET', 'POST'])
+def deny_trailer(trailer_id, index=0):
+    Trailer.deny(trailer_id)
+    return redirect(url_for('review_trailers', i=index))
 
 # Event Review():
 @app.route('/admin/review/events')
 def review_events():
-    return render_template("review-events.html")
+    events = Event.get_pending()
+    return render_template("review-events.html", events=events, n=len(events))
+
+@app.route('/admin/approve/<event_id>')
+def approve_event(event_id):
+    Event.approve(event_id)
+    return redirect(url_for('review_events'))
+
+@app.route('/admin/deny/<event_id>')
+def deny_event(event_id):
+    Event.deny(event_id)
+    return redirect(url_for('review_events'))

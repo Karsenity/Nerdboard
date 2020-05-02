@@ -20,12 +20,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81de6a7c-51a9-4fb4-820e-38d16c492e56" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/review-trailers-home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/event.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/event.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/trailer.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/trailer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/submissions/trailers/e63ed0d2b0f342bbbd5cba9a91eefd17" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/confirm-submission.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/confirm-submission.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/display.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/display.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/review-events.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/review-events.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/review-trailers.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/review-trailers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/submit-event.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/submit-event.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/submit-project.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/submit-project.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/submit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/submit.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +45,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -54,6 +64,14 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="full.screen.before.presentation.mode" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kaion\OneDrive\Documents\GitHub\Nerdboard\src\templates" />
+      <recent name="C:\Users\kaion\OneDrive\Documents\GitHub\Nerdboard\src\models" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -129,9 +147,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="564" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1587945295927" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1587924768672">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1588367570067">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1587924768672" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1588367570067" />
   </component>
 </project>

@@ -1,7 +1,8 @@
 import uuid
 from datetime import datetime, date
 
-from common.database import Database
+from src.common.database import Database
+#from common.database import Database
 
 
 class Event(object):
@@ -20,10 +21,11 @@ class Event(object):
     def save_to_mongo(self):
         Database.insert(collection='pending_events',
                         data=self.json())
-    def approve(self):
-        q = { '_id': self._id}
-        Database.delete_one(collection='pending_events', query=q)
-        Database.insert(collection='approved_events', data=self.json())
+
+    def expire(self):
+        q = {'_id': self._id}
+        Database.delete_one(collection='approved_events', query=q)
+
 
     def json(self):
         return {
@@ -43,6 +45,9 @@ class Event(object):
         dt = datetime.combine(cur_date, cur_time)
         return dt.strftime("%b %d @ %I:%M %p")
 
+    def string_id(self):
+        return str(self._id)
+
     @classmethod
     def from_mongo(cls, id):
         post_data = Database.find_one(collection='pending_events', query={'_id': id})
@@ -57,3 +62,15 @@ class Event(object):
     def get_pending(cls):
         posts = Database.find(collection='pending_events', query={})
         return [cls(**post) for post in posts]
+
+    @classmethod
+    def approve(cls, id):
+        q = {'_id': id}
+        post = Database.find_one(collection='pending_events', query=q)
+        Database.insert(collection='approved_events', data=post)
+        Database.delete_one(collection='pending_events', query=q)
+
+    @classmethod
+    def deny(cls, id):
+        q = {'_id': id}
+        Database.delete_one(collection='pending_events', query=q)

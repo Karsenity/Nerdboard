@@ -22,7 +22,7 @@
 						Admin Tools
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="{{ url_for('review_trailers') }}">Review Projects</a>
+						<a class="dropdown-item" href="{{ url_for('review_trailers', i=0) }}">Review Projects</a>
 						<a class="dropdown-item active" href="{{ url_for('review_events') }}">Review Events</a>
 					</div>
 				</li>
@@ -30,23 +30,34 @@
 		</nav>
 	</header>
 
-	<main role="main" class="card-columns p-5 mx-5" style="margin-top:150px;margin-left:auto;margin-right:auto">
-        {%for i in range(9)%}
-        <div class="card bg-white border shadow">
-            <div class="card-body">
-                <h1 class="card-title">Event Name</h1>
-                <p class="card-text">Submitted by John Doe</p>
-                <hr>
-                <p class="card-text text-secondary">April 25, 2020 @ 6:45 PM</p>
-                <p class="card-text text-secondary">HNS 168</p>
-                <p class="card-text">Here is a short description of my event, roughly 20-25 words. This is what will appear underneath the title and location on the actual board.</p>
-                <hr>
-                <button type="button" class="btn btn-success">Approve</button>
-			    <button type="button" class="btn btn-danger">Deny</button>
-            </div>
-        </div>
-        {%endfor%}
-    </main>
+	<main role="main" style="margin-top:150px;margin-left:auto;margin-right:auto">
+		<h1 class="text-center">Pending Events</h1>
+		{%if n > 0%}
+			<div class="card-columns p-5 mx-5" style="column-count: 4">
+				{%for event in events%}
+				<div class="card bg-white border shadow" id="card{{ event._id }}">
+					<div class="card-body">
+						<h2 class="card-title">{{ event.title }}</h2>
+						<p class="card-text">{{ event.author }}</p>
+						<hr>
+						<p class="card-text text-secondary">{{ event.date_time() }}</p>
+						<p class="card-text text-secondary">{{ event.location }}</p>
+						<p class="card-text">{{ event.description }}</p>
+						<hr>
+						<form class="w-25" role="form" action="{{ url_for('approve_event', event_id=event._id) }}">
+							<button type="submit" class="btn btn-success">Approve</button>
+						</form>
+						<form class="w-25" role="form" action="{{ url_for('deny_event', event_id=event._id) }}">
+							<button type="submit" class="btn btn-danger">Deny</button>
+						</form>
+					</div>
+				</div>
+				{%endfor%}
+			</div>
+		{%else%}
+			<h2 class="text-center">No pending events right now! Check back later!</h2>
+		{%endif%}
+	</main>
 	
 	<!--footer role="contentinfo" class="container-fluid p-1 fixed-bottom" style="background-color:#003098">
 		<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>

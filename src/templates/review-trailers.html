@@ -22,7 +22,7 @@
 						Admin Tools
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item active" href="{{ url_for('review_trailers') }}">Review Projects</a>
+						<a class="dropdown-item active" href="{{ url_for('review_trailers', i=0) }}">Review Projects</a>
 						<a class="dropdown-item" href="{{ url_for('review_events') }}">Review Events</a>
 					</div>
 				</li>
@@ -32,17 +32,21 @@
 
 	<aside role="complementary" class="container float-left" style="width:20%;margin-top:150px;margin-left:8%">
 		<div id="description" class="container py-3 bg-white border rounded shadow">
-			<h1>Example Project</h1>
+			<h1>{{ current.title }}</h1>
 			<hr>
-			<p class="card-title">Submitted by John Doe</p>
-			<p>Github Link</p>
+			<p class="card-title">{{ current.author }}</p>
+			{%if current.link%}
+				<p>See more at: <a href="{{ current.link }}">{{ current.link }}</a></p>
+			{%endif%}
 			<hr>
-			<button type="button" class="btn btn-success">Approve</button>
+			<form class="w-25" role="form" action="{{ url_for('approve_trailer', trailer_id=current._id, index=i) }}">
+				<button type="submit" class="btn btn-success">Approve</button>
+			</form>
 			<button type="button" class="btn btn-danger" onclick="toggle()">Deny</button>
 		</div>
 
 		<div id="deny-reasons" class="container py-3 my-3 bg-white border rounded shadow" style="display:none">
-			<form role="form" name="reasons" action="#" method="post" enctype="multipart/form-data">
+			<form role="form" name="reasons" action="{{ url_for('deny_trailer', trailer_id=current._id, index=i) }}" method="post" enctype="multipart/form-data">
 				<div class="form-group">
 					<label for="description" class="h4">Comments: </label>
 					<textarea rows="5" maxlength="200" class="form-control bg-light" placeholder="Why did you deny this submission? How can they improve it?" id="comments" name="comments" required></textarea>
@@ -54,20 +58,34 @@
 
 	<main role="main" class="container justify-content-center float-right w-75 p-0" style="margin-top:150px;margin-right:8%">
 		<video id="video" width="100%" class="border shadow" controls muted>
-			<source src="{{ url_for('static', filename='submissions/trailers/test_trailer.mp4') }}" type="video/mp4">
+			<source src="{{ current.trailer }}" type="video/mp4">
 		</video>
 	</main>
 
 	<div id="pagination" class="container-fluid" style="position:absolute;bottom:0">
 		<ul class="pagination justify-content-center">
-			  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-			  <li class="page-item"><a class="page-link" href="#">1</a></li>
-			  <li class="page-item"><a class="page-link" href="#">2</a></li>
-			  <li class="page-item"><a class="page-link" href="#">3</a></li>
-			  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+			{%if i==first%}
+			<li class="page-item"><a class="page-link disabled" href="{{ url_for('review_trailers', i=first) }}">Previous</a></li>
+			{%else%}
+			<li class="page-item"><a class="page-link" href="{{ url_for('review_trailers', i=i-1) }}">Previous</a></li>
+			{%endif%}
+
+			{%for index in range(first, last+1)%}
+				{%if index == 1%}
+				<li class="page-item"><a class="page-link active" href="{{ url_for('review_trailers', i=index) }}">{{ index+1 }}</a></li>
+				{%else%}
+				<li class="page-item"><a class="page-link active" href="{{ url_for('review_trailers', i=index) }}">{{ index+1 }}</a></li>
+				{%endif%}
+			{%endfor%}
+
+			{%if i==last%}
+			<li class="page-item"><a class="page-link disabled" href="{{ url_for('review_trailers', i=first) }}">Next</a></li>
+			{%else%}
+			<li class="page-item"><a class="page-link" href="{{ url_for('review_trailers', i=i+1) }}">Previous</a></li>
+			{%endif%}
 		</ul>
 	</div>
-	
+
 	<!--footer role="contentinfo" class="container-fluid p-1 fixed-bottom" style="background-color:#003098">
 		<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
 	</footer-->
