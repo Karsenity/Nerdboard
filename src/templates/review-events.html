@@ -27,6 +27,13 @@
 					</div>
 				</li>
 			</ul>
+			<span class="navbar-text ml-auto text-white">
+				{% if current_user.is_authenticated %}
+				Welcome, {{ current_user.username }}! <a href="{{ url_for('logout') }}" style="text-decoration:underline">Log out</a>
+				{% else %}
+				<a href="{{ url_for('admin_login') }}" style="text-decoration:underline">Log in</a> for admin privileges.
+				{% endif %}
+			</span>
 		</nav>
 	</header>
 

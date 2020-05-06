@@ -22,7 +22,7 @@
 						Admin Tools
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item active" href="{{ url_for('review_trailers', i=0) }}">Review Projects</a>
+						<a class="dropdown-item" href="{{ url_for('review_trailers', i=0) }}">Review Projects</a>
 						<a class="dropdown-item" href="{{ url_for('review_events') }}">Review Events</a>
 					</div>
 				</li>
@@ -36,12 +36,27 @@
 			</span>
 		</nav>
 	</header>
-
-	<main role="main" style="margin-top:150px;margin-left:auto;margin-right:auto">
-		<h1 class="text-center">Pending Projects</h1>
-		<h2 class="text-center">No pending projects right now! Check back later!</h2>
+	
+	<main role="main">
+		<div class="container text-center justify-content-center bg-white border shadow py-5 px-2 w-25" style="margin-top:300px;margin-left:auto;margin-right:auto">
+			<h1>Login Required</h1>
+			<hr class="w-50"><br>
+            <form role="form" name="login" method="post">
+				<div class="form-group">
+					<label class="h5" for="pwd">Please enter the admin password.</label>
+					<br>
+					<input type="password" class="form-control input-lg w-75 mx-auto text-center bg-light" id="pwd" name="pwd" placeholder="Enter password" required>
+				</div>
+				{% if invalid %}
+				<p class="text-danger card-title">Login failed. Please try again.</p>
+				{% else %}
+				<br>
+				{% endif %}
+				<button type="submit" class="btn-lg btn-primary">Submit</button>
+			</form>
+		</div>
 	</main>
-
+	
 	<!--footer role="contentinfo" class="container-fluid p-1 fixed-bottom" style="background-color:#003098">
 		<p class="text-white m-2 card-text">Comp Sci Corner is the product of NCF students Austin LoPresto, Brian Hinshaw, and Kai Hall. Credit for the original info board goes to Brian Hinshaw, Nisanur Genc, and Saloanee Labh.</p>
 	</footer-->

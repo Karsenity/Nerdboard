@@ -25,3 +25,11 @@ class Database(object):
     def delete_one(collection, query):
         return Database.DATABASE[collection].delete_one(query)
 
+    @staticmethod
+    def update_one(collection, query, new_vals):
+        Database.DATABASE[collection].update_one(query, new_vals)
+
+    @staticmethod
+    def is_empty(collection):
+        return Database.DATABASE[collection].count == 0
+

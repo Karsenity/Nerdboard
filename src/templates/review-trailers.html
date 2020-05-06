@@ -27,6 +27,13 @@
 					</div>
 				</li>
 			</ul>
+			<span class="navbar-text ml-auto text-white">
+				{% if current_user.is_authenticated %}
+				Welcome, {{ current_user.username }}! <a href="{{ url_for('logout') }}" style="text-decoration:underline">Log out</a>
+				{% else %}
+				<a href="{{ url_for('admin_login') }}" style="text-decoration:underline">Log in</a> for admin privileges.
+				{% endif %}
+			</span>
 		</nav>
 	</header>
 
@@ -71,17 +78,17 @@
 			{%endif%}
 
 			{%for index in range(first, last+1)%}
-				{%if index == 1%}
+				{%if index == i%}
 				<li class="page-item"><a class="page-link active" href="{{ url_for('review_trailers', i=index) }}">{{ index+1 }}</a></li>
 				{%else%}
-				<li class="page-item"><a class="page-link active" href="{{ url_for('review_trailers', i=index) }}">{{ index+1 }}</a></li>
+				<li class="page-item"><a class="page-link" href="{{ url_for('review_trailers', i=index) }}">{{ index+1 }}</a></li>
 				{%endif%}
 			{%endfor%}
 
 			{%if i==last%}
 			<li class="page-item"><a class="page-link disabled" href="{{ url_for('review_trailers', i=first) }}">Next</a></li>
 			{%else%}
-			<li class="page-item"><a class="page-link" href="{{ url_for('review_trailers', i=i+1) }}">Previous</a></li>
+			<li class="page-item"><a class="page-link" href="{{ url_for('review_trailers', i=i+1) }}">Next</a></li>
 			{%endif%}
 		</ul>
 	</div>
