@@ -113,17 +113,17 @@ def admin():
 
 # Admin Login
 @app.route('/admin/login', methods=['GET', 'POST'])
-def admin_login(invalid=False):
+def admin_login():
     if current_user.is_authenticated:
         return redirect(url_for("home"))
     if request.method == 'POST':
         password = request.form.get('pwd')
         user = User.get_user("Admin")
         if user is None or not user.check_password(password):
-            return redirect(url_for("admin_login", invalid=True))
+            return render_template("login.html", invalid=True)
         login_user(user)
         return redirect(request.args.get('next') or url_for('home'))
-    return render_template("login.html", title="Comp Sci Corner | Admin Login")
+    return render_template("login.html", title="Comp Sci Corner | Admin Login", invalid=False)
 
 # Logout
 @app.route('/logout')
@@ -158,13 +158,13 @@ def review_trailers(i):
 @login_required
 def approve_trailer(trailer_id, index=0):
     Trailer.approve(trailer_id)
-    return redirect(url_for('review_trailers', i=index))
+    return redirect(url_for('review_trailers'), i=index)
 
 @app.route('/admin/deny/<trailer_id>', methods=['GET', 'POST'])
 @login_required
 def deny_trailer(trailer_id, index=0):
     Trailer.deny(trailer_id)
-    return redirect(url_for('review_trailers', i=index))
+    return redirect(url_for('review_trailers'), i=index)
 
 # Event Review():
 @app.route('/admin/review/events')

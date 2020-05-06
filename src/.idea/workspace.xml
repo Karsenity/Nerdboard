@@ -20,19 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81de6a7c-51a9-4fb4-820e-38d16c492e56" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/confirm-submission.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/confirm-submission.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/review-events.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/review-events.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/review-trailers-home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/review-trailers-home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/review-trailers.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/review-trailers.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/submit-event.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/submit-event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/submit-project.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/submit-project.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/submit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/submit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
