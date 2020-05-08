@@ -51,7 +51,7 @@
                         <source src="{{trailers[0].trailer_path}}" type="video/mp4">
                     </video>
                     {%for i in range(1, n_trailers)%}
-                        <video id="video" class="carousel-item" width="100%" autoplay muted controls>
+                        <video id="video" class="carousel-item" width="100%" autoplay muted>
                             <source src="{{trailers[i].trailer_path}}" type="video/mp4">
                         </video>
                     {%endfor%}
@@ -61,22 +61,26 @@
         </div>
     <!--Video Description-->
         <aside role="complementary" id="trailer_description">
-            <div id="description_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div id="description_carousel" class="carousel slide" data-ride="carousel" data-pause="false">
             {% if n_trailers != 0 %}
                 <div class="carousel-inner">
                     <div class="description carousel-item active">
                         <span class="trailer_name"> {{trailers[0].title}} </span>
-                        <span class="trailer_author"> by {{ trailers[0].author }} ({{ trailers[0].email }})</span>
+                        <span class="trailer_author"> by {{ trailers[0].author }} {% if trailers[0].display_email %}({{ trailers[0].email }}){% endif %}</span>
                         <div class="trailer_divider"></div>
+						{% if trailers[0].link %}
                         <div class="trailer_link"> See more at: {{ trailers[0].link }}</div>
+						{% endif %}
                     </div>
 
                     {% for i in range(1, n_trailers) %}
                         <div class="description carousel-item">
                             <span class="trailer_name"> {{trailers[i].title}} </span>
-                            <span class="trailer_author"> by {{ trailers[i].author }} ({{ trailers[i].email }})</span>
+                            <span class="trailer_author"> by {{ trailers[i].author }} {% if trailers[i].display_email %}({{ trailers[i].email }}){% endif %}</span>
                             <div class="trailer_divider"></div>
+							{% if trailers[i].link %}
                             <div class="trailer_link"> See more at: {{ trailers[i].link }}</div>
+							{% endif %}
                         </div>
                     {% endfor %}
                 </div>

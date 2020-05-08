@@ -22,7 +22,7 @@ def initialize_database():
     # pass
     Database.initialize()
 
-uploads_dir = os.path.join(app.root_path, 'static/submissions/trailers')
+uploads_dir = os.path.join(app.root_path, 'static', 'submissions', 'trailers')
 
 # Home Page (Temp)
 @app.route('/')
@@ -47,8 +47,10 @@ def display_page():
     events = Event.get_approved()
     trailers = Trailer.get_approved()
     print(trailers)
+    script = os.path.join('js', 'display.js')
 
-    return render_template("display.html", title="Comp Sci Corner | Display", events=events, n_events=len(events), trailers=trailers, n_trailers=len(trailers))
+    return render_template("display.html", title="Comp Sci Corner | Display", events=events, n_events=len(events),
+                           trailers=trailers, n_trailers=len(trailers), script=script)
 
 
 # Handles a file upload
@@ -152,19 +154,18 @@ def review_trailers(i):
     i = max(first, min(last, int(i)))
     current = trailers[i]
 
-    return render_template("review-trailers.html", title=("Comp Sci Corner | Project Review | Page " + (i+1)), n=len(trailers), current=current, i=i, first=first, last=last)
+    return render_template("review-trailers.html", title="Comp Sci Corner | Project Review", n=len(trailers),
+                           current=current, i=i, first=first, last=last)
 
 @app.route('/admin/approve/trailer/<trailer_id>')
-@login_required
 def approve_trailer(trailer_id, index=0):
     Trailer.approve(trailer_id)
-    return redirect(url_for('review_trailers'), i=index)
+    return redirect(url_for('review_trailers', i=index))
 
 @app.route('/admin/deny/<trailer_id>', methods=['GET', 'POST'])
-@login_required
 def deny_trailer(trailer_id, index=0):
     Trailer.deny(trailer_id)
-    return redirect(url_for('review_trailers'), i=index)
+    return redirect(url_for('review_trailers', i=index))
 
 # Event Review():
 @app.route('/admin/review/events')
@@ -175,13 +176,11 @@ def review_events():
     return render_template("review-events.html", title="Comp Sci Corner | Review Events", events=events, n=len(events))
 
 @app.route('/admin/approve/event/<event_id>')
-@login_required
 def approve_event(event_id):
     Event.approve(event_id)
     return redirect(url_for('review_events'))
 
 @app.route('/admin/deny/<event_id>')
-@login_required
 def deny_event(event_id):
     Event.deny(event_id)
     return redirect(url_for('review_events'))
