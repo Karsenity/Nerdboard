@@ -7,9 +7,6 @@ from src.common.database import Database
 from src.models.trailer import Trailer
 from src.models.event import Event
 from src.models.user import User
-#from common.database import Database
-#from models.trailer import Trailer
-#from models.event import Event
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'its-secret-but-not-too-secret'
@@ -17,50 +14,46 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'its-secret-but-not-t
 login = LoginManager(app)
 login.login_view = 'admin_login'
 
+
 @app.before_first_request
 def initialize_database():
+    """Initializes MongoDB Database before application starts running"""
     Database.initialize()
 
 uploads_dir = os.path.join(app.root_path, 'static', 'submissions', 'trailers')
 
-# Home Page (Temp)
+
 @app.route('/')
 def home():
-    print("hit home")
-    print(Database.is_empty(collection='admin_users'))
+    """Renders the submission choice page"""
     if Database.is_empty(collection='admin_users'):
-        print("Hit add_admin")
         User.add_admin()
     return choose_submission()
 
 
-# Submission Choice Page
 @app.route('/submit')
 def choose_submission():
+    """Renders the submission page, where users can choose between either submitting a project or a trailer."""
     return render_template("submit.html", title="Comp Sci Corner | Make a Submission")
 
-# Display Page
+
 @app.route('/display')
 def display_page():
-
-    # files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
-    # video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
-    #, len=len(video_urls), videos=video_urls
+    """Renders the main display that will be shown in the HNS 160's Hallway."""
     Event.remove_expired()
     Trailer.remove_expired()
 
     events = Event.get_approved()
     trailers = Trailer.get_approved()
-    print(trailers)
     script = os.path.join('js', 'display.js')
 
     return render_template("display.html", title="Comp Sci Corner | Display", events=events, n_events=len(events),
                            trailers=trailers, n_trailers=len(trailers), script=script)
 
 
-# Handles a file upload
 @app.route('/submit/trailer/handle-submission', methods=['POST'])
 def handle_trailer_submission():
+    """Called after submit_trailer(), will take information user submitted and create a Trailer-object to be stored in MongoDB"""
     _id = uuid.uuid4().hex
     author = request.form.get('name')
     email = request.form.get('email')
@@ -79,9 +72,9 @@ def handle_trailer_submission():
     return redirect(url_for('confirm_submission'))
 
 
-# Handles a file upload
 @app.route('/submit/event/handle-submission', methods=['POST'])
 def handle_event_submission():
+    """Called after submit_event(), will take information user submitted and create an Event-object to be stored in MongoDB"""
     author = request.form.get('name')
     email = request.form.get('email')
     title = request.form.get('title')
@@ -96,31 +89,33 @@ def handle_event_submission():
     return redirect(url_for('confirm_submission'))
 
 
-# Goes to the submission confirmation
 @app.route('/submit/confirm')
 def confirm_submission():
+    """After user submits an event or trailer, they are redirected here and prompted to make another submission."""
     return render_template("confirm-submission.html", title="Comp Sci Corner | Submission Confirmation")
 
 
-# Submit Project
 @app.route('/submit/project')
 def submit_project():
+    """Renders submission form for Trailers"""
     return render_template("submit-project.html", title="Comp Sci Corner | Submit a Project")
 
 
-# Submit Event
 @app.route('/submit/event')
 def submit_event():
+    """Renders submission form for Events"""
     return render_template("submit-event.html", title="Comp Sci Corner | Submit an Event")
 
-# Admin Home Page
+
 @app.route('/admin')
 def admin():
+    """Returns function to render the admin login-page."""
     return admin_login()
 
-# Admin Login
+
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
+    """Renders login-page for admin account. Admins are able to access event/trailer submissions to approve them for display."""
     if current_user.is_authenticated:
         return redirect(url_for("home"))
     if request.method == 'POST':
@@ -132,23 +127,28 @@ def admin_login():
         return redirect(request.args.get('next') or url_for('home'))
     return render_template("login.html", title="Comp Sci Corner | Admin Login", invalid=False)
 
-# Logout
+
 @app.route('/logout')
 @login_required
 def logout():
+    """Redirects user to home and logs them out"""
     logout_user()
     return redirect(url_for('home'))
 
-# Trailer Review (Home)
+
 @app.route('/admin/review/projects')
 @login_required
 def review_trailers_home():
+    """Renders the homepage for admins reviewing trailers."""
     return render_template("review-trailers-home.html", title="Comp Sci Corner | Project Review")
 
-# Trailer Review (Pages)
+
 @app.route('/admin/review/projects/<i>')
 @login_required
 def review_trailers(i):
+    """Renders the review page for trailers, User must be logged in as admin to access. The user can approve or deny pending
+    submissions. Approved trailers join the queue to be put on the board, denied ones should send an email back to the user
+    who submitted it with revisions they must apply."""
     trailers = Trailer.get_pending()
 
     if len(trailers) == 0:
@@ -162,34 +162,48 @@ def review_trailers(i):
     return render_template("review-trailers.html", title="Comp Sci Corner | Project Review", n=len(trailers),
                            current=current, i=i, first=first, last=last)
 
+
 @app.route('/admin/approve/trailer/<trailer_id>')
 def approve_trailer(trailer_id, index=0):
+    """Approves a trailer from the trailer page"""
     Trailer.approve(trailer_id)
     return redirect(url_for('review_trailers', i=index))
 
+
 @app.route('/admin/deny/<trailer_id>', methods=['GET', 'POST'])
 def deny_trailer(trailer_id, index=0):
+    """Denies a trailer from the trailer page"""
     Trailer.deny(trailer_id)
     return redirect(url_for('review_trailers', i=index))
+
 
 # Event Review():
 @app.route('/admin/review/events')
 @login_required
 def review_events():
+    """Renders Event review page, User must be logged in as an admin to access."""
     events = Event.get_pending()
-    print(events)
     return render_template("review-events.html", title="Comp Sci Corner | Review Events", events=events, n=len(events))
+
 
 @app.route('/admin/approve/event/<event_id>')
 def approve_event(event_id):
+    """Approves an event and adds it to the active rotation"""
     Event.approve(event_id)
     return redirect(url_for('review_events'))
 
+
 @app.route('/admin/deny/<event_id>')
 def deny_event(event_id):
+    """Rejects an event and removes it."""
     Event.deny(event_id)
     return redirect(url_for('review_events'))
 
+
 @login.user_loader
 def load_user(id):
+    """loads a current user based on id
+
+    :param: (str) id, corresponds to the id of a user in the database
+    """
     return User.get_user_by_id(id)
