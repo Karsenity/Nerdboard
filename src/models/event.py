@@ -16,7 +16,6 @@ class Event(object):
         self.location = location
         self.description = description
         self._id = uuid.uuid4().hex if _id is None else _id
-        #Convert date/time to datetime object
 
     def save_to_mongo(self):
         Database.insert(collection='pending_events',
@@ -25,7 +24,6 @@ class Event(object):
     def expire(self):
         q = {'_id': self._id}
         Database.delete_one(collection='approved_events', query=q)
-
 
     def json(self):
         return {
@@ -40,7 +38,7 @@ class Event(object):
         }
 
     def date_time(self):
-        cur_date = date.fromisoformat(self.date)
+        cur_date = datetime.strptime(self.date, '%Y-%m-%d')
         cur_time = datetime.strptime(self.time, "%H:%M").time()
         dt = datetime.combine(cur_date, cur_time)
         return dt.strftime("%b %d @ %I:%M %p")
@@ -66,15 +64,22 @@ class Event(object):
     @classmethod
     def approve(cls, id):
         q = {'_id': id}
-        print("Starting approval")
         post = Database.find_one(collection='pending_events', query=q)
-        print("Inserting to Database...")
         Database.insert(collection='approved_events', data=post)
-        print("Successfully inserted! Deleting from database....")
         Database.delete_one(collection='pending_events', query=q)
-        print("Successfully deleted!")
 
     @classmethod
     def deny(cls, id):
         q = {'_id': id}
         Database.delete_one(collection='pending_events', query=q)
+
+    @classmethod
+    def remove_expired(cls):
+        events = cls.get_approved()
+        for event in events:
+            event_date = datetime.strptime(event.date, '%Y-%m-%d')
+            cur_date = datetime.now()
+            if event_date < cur_date:
+                event.expire()
+
+

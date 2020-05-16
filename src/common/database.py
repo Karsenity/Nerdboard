@@ -31,5 +31,5 @@ class Database(object):
 
     @staticmethod
     def is_empty(collection):
-        return Database.DATABASE[collection].count == 0
+        return Database.DATABASE[collection].count_documents({}) == 0
 

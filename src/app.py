@@ -19,7 +19,6 @@ login.login_view = 'admin_login'
 
 @app.before_first_request
 def initialize_database():
-    # pass
     Database.initialize()
 
 uploads_dir = os.path.join(app.root_path, 'static', 'submissions', 'trailers')
@@ -27,7 +26,10 @@ uploads_dir = os.path.join(app.root_path, 'static', 'submissions', 'trailers')
 # Home Page (Temp)
 @app.route('/')
 def home():
+    print("hit home")
+    print(Database.is_empty(collection='admin_users'))
     if Database.is_empty(collection='admin_users'):
+        print("Hit add_admin")
         User.add_admin()
     return choose_submission()
 
@@ -44,6 +46,9 @@ def display_page():
     # files = [f for f in os.listdir(uploads_dir) if f != '.DS_Store']
     # video_urls = [url_for('static', filename='submissions/trailers/' + url) for url in files]
     #, len=len(video_urls), videos=video_urls
+    Event.remove_expired()
+    Trailer.remove_expired()
+
     events = Event.get_approved()
     trailers = Trailer.get_approved()
     print(trailers)

@@ -30,8 +30,10 @@ class User(UserMixin):
         new_pw = {'password_hash': self.password_hash}
         Database.update_one(collection='admin_users', query=query, new_vals={'$set': new_pw})
 
+
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
 
     @classmethod
     def get_user(cls, username):
@@ -45,5 +47,6 @@ class User(UserMixin):
 
     @staticmethod
     def add_admin():
-        user = User("Admin", "pbkdf2:sha256:150000$tOEO8zuZ$7529b7ee8596fc45e20527cd54802df0357e721ed09ecc795aeb83a34c6414d4")
+        print("Hit")
+        user = User("Admin", generate_password_hash("admin123"))
         user.save_to_mongo()

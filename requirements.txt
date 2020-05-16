@@ -2,3 +2,4 @@ Flask == 1.1.1
 pymongo == 3.10.1
 gunicorn
 Jinja2
+Flask-Login
