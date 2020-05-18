@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p>Dear {{trailer.author}},</p>
+</br>
+<p>We regret to inform you that your project, "{{trailer.title}}," has been denied. The admin who denied your submission made the following comment(s):</p>
+</br>
+<p class="secondary"><em>{{comments}}</em></p>
+</br>
+<p>Thank you for keeping Comp Sci Corner alive!</p>
+<p>The Comp Sci Corner Team</p>
+
+{% endblock %}

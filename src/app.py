@@ -1,18 +1,29 @@
 from flask import Flask, render_template, request, url_for, redirect, abort
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
+from flask_mail import Mail, Message
+from datetime import datetime
 import os
 import uuid
 
 from src.common.database import Database
 from src.models.trailer import Trailer
 from src.models.event import Event
+
 from src.models.user import User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'its-secret-but-not-too-secret'
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = 1
+app.config['MAIL_USERNAME'] = 'compscicorner@gmail.com'
+app.config['MAIL_PASSWORD'] = 'NCF2020S@rasota'
 
 login = LoginManager(app)
 login.login_view = 'admin_login'
+
+mail = Mail(app)
 
 
 @app.before_first_request
@@ -44,7 +55,7 @@ def display_page():
     Trailer.remove_expired()
 
     events = Event.get_approved()
-    trailers = Trailer.get_approved()
+    trailers = Trailer.get_queued()
     script = os.path.join('js', 'display.js')
 
     return render_template("display.html", title="Comp Sci Corner | Display", events=events, n_events=len(events),
@@ -66,7 +77,7 @@ def handle_trailer_submission():
 
     link = request.form.get('link')
 
-    new_post = Trailer(author, email, display_email, title, trailer_path, link, _id)
+    new_post = Trailer(author, email, display_email, title, trailer_path, datetime.now(), link, _id)
     new_post.save_to_mongo()
 
     return redirect(url_for('confirm_submission'))
@@ -165,14 +176,26 @@ def review_trailers(i):
 
 @app.route('/admin/approve/trailer/<trailer_id>')
 def approve_trailer(trailer_id, index=0):
-    """Approves a trailer from the trailer page"""
+    """Approves a trailer from the trailer page. Sends an email to the trailer owner."""
+    trailer = Trailer.from_mongo(trailer_id)
+    send_email(subject="Your Comp Sci Corner submission was approved!",
+               recipient=trailer.email,
+               text_body=render_template("trailer_approve_email.txt", trailer=trailer),
+               html_body=render_template("trailer_approve_email.html", trailer=trailer))
     Trailer.approve(trailer_id)
     return redirect(url_for('review_trailers', i=index))
 
 
-@app.route('/admin/deny/<trailer_id>', methods=['GET', 'POST'])
+@app.route('/admin/deny/trailer/<trailer_id>', methods=['GET', 'POST'])
 def deny_trailer(trailer_id, index=0):
-    """Denies a trailer from the trailer page"""
+    """Denies a trailer from the trailer page. Sends an email to the trailer owner."""
+    trailer = Trailer.from_mongo(trailer_id)
+    comments = request.form.get('comments')
+    print(comments)
+    send_email(subject="Your Comp Sci Corner submission was denied.",
+               recipient=trailer.email,
+               text_body=render_template("trailer_deny_email.txt", trailer=trailer, comments=comments),
+               html_body=render_template("trailer_deny_email.html", trailer=trailer, comments=comments))
     Trailer.deny(trailer_id)
     return redirect(url_for('review_trailers', i=index))
 
@@ -188,14 +211,24 @@ def review_events():
 
 @app.route('/admin/approve/event/<event_id>')
 def approve_event(event_id):
-    """Approves an event and adds it to the active rotation"""
+    """Approves an event and adds it to the active rotation. Sends an email to the event owner."""
+    event = Event.from_mongo(event_id)
+    send_email(subject="Your Comp Sci Corner event was approved!",
+               recipient=event.email,
+               text_body=render_template("event_approve_email.txt", event=event),
+               html_body=render_template("event_approve_email.html", event=event))
     Event.approve(event_id)
     return redirect(url_for('review_events'))
 
 
-@app.route('/admin/deny/<event_id>')
+@app.route('/admin/deny/event/<event_id>')
 def deny_event(event_id):
-    """Rejects an event and removes it."""
+    """Rejects an event and removes it. Sends an email to the event owner."""
+    event = Event.from_mongo(event_id)
+    send_email(subject="Your Comp Sci Corner event was denied.",
+               recipient=event.email,
+               text_body=render_template("event_deny_email.txt", event=event),
+               html_body=render_template("event_deny_email.html", event=event))
     Event.deny(event_id)
     return redirect(url_for('review_events'))
 
@@ -207,3 +240,16 @@ def load_user(id):
     :param: (str) id, corresponds to the id of a user in the database
     """
     return User.get_user_by_id(id)
+
+def send_email(subject, recipient, text_body, html_body):
+    """Sends an email from compscicorner@gmail.com.
+
+    :param: (str) subject, the subject of the email
+    :param: (str) recipient, the email address of the recipient
+    :param: (str) text_body, the plain text body of the email
+    :param: (str) html_body, the html template for the email
+    """
+    msg = Message(subject, sender="compscicorner@gmail.com", recipients=[recipient])
+    msg.body = text_body
+    msg.html = html_body
+    mail.send(msg)

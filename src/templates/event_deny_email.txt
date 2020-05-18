@@ -1,0 +1,6 @@
+Dear {{event.author}},
+
+We regret to inform you that your event, "{{event.title}}," has been denied. Please contact the Comp Sci Corner admins if you believe there has been a mistake.
+
+Thank you for keeping Comp Sci Corner alive!
+The Comp Sci Corner Team

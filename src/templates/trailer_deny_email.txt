@@ -1,0 +1,8 @@
+Dear {{trailer.author}},
+
+We regret to inform you that your project, "{{trailer.title}}," has been denied. The admin who denied your submission made the following comment(s):
+
+{{comments}}
+
+Thank you for keeping Comp Sci Corner alive!
+The Comp Sci Corner Team

@@ -1,0 +1,6 @@
+Dear {{trailer.author}},
+
+Congratulations! Your project, "{{trailer.title}}," has been approved! Expect to see it on the display board soon.
+
+Thank you for keeping Comp Sci Corner alive!
+The Comp Sci Corner Team
